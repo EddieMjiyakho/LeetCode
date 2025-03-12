@@ -31,6 +31,41 @@ public class Practise {
 
     }
 
+    
+    //88. Merge 2 Sorted arrays
+    //m & n are num of elements in arr1 and arr2 respectively
+    public void merge( int[] arr1, int m, int[] arr2, int n ){
+
+        int k = (m+n)-1; //total indexing for final array= arr1 (last index)
+        int i= m-1; //index for arr1
+        int j= n-1; //index for arr2
+
+        //the trick is to start merging from end of arrays
+        //since arr is sorted
+        //merges in reverse
+        while( i>=0 & j>=0 ){
+
+            if( arr1[i] > arr2[j] ){
+                arr1[k] = arr1[i];
+                i--;
+
+            } else{
+                arr1[k] = arr2[j];
+                j--;
+
+            }
+            k--;
+        } 
+
+        //fills arr1 with leftover nums from arr2
+        while( j>=0 ){ 
+            arr1[k] = arr2[j];
+            j--;
+            k--;
+        }
+        
+    }
+
     public static void main(String[] args){
 
         Scanner scan = new Scanner(System.in);
