@@ -109,6 +109,45 @@ public class Practise {
         return list;
     }
 
+    //2461 MaxSum of Distinct vals of size K
+    //Fixed Sliding Window
+    public static long maxSumDistnct( int[] arr , int k){
+
+        long maxSum = 0;
+        long windowSum = 0;
+        int left=0;
+
+        Set<Integer> seen = new HashSet<>();
+
+        for(int right=0; right<arr.length ;right++){
+
+            //shrinking window if duplicates found
+            while( seen.contains(arr[right] ) ){
+
+                seen.remove(arr[left]);
+                windowSum -= arr[left];
+                left++;
+
+            }
+
+            //in general keep on adding new elements
+            seen.add(arr[right]);
+            windowSum += arr[right];
+
+            //check if window is of size k
+            if( right-left+1 == k ){
+
+                maxSum = Math.max(maxSum, windowSum); //update maxSum
+
+                seen.remove(arr[left]); //move on by removing leftmost
+                windowSum -= arr[left];
+                left++;
+            }
+        }
+
+        return maxSum;
+    }  
+
 
     public static void main(String[] args){
 
@@ -123,7 +162,7 @@ public class Practise {
 
         int[] array =  Arrays.stream(line.split(",")).mapToInt(Integer::parseInt).toArray();
 
-        String res = Arrays.toString((twoSum(array, target))) ;
+        long res = maxSumDistnct(array, target) ;
 
         System.out.println( res);
 
