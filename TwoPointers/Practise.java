@@ -149,6 +149,58 @@ public class Practise {
     }  
 
 
+    //438. Find all anagrams in a string
+    //Fixed size sliding window 
+    public static List<Integer> findAnagrams( String s, String p){
+
+        int window = p.length(); //window size
+        int stringLen = s.length();
+
+        // frequency arrays to get permutations
+        //to keeps track of how many times each letter appears in p
+        int[] pFreq = new int[26];
+        int[] sFreq = new int[26];
+
+        // if s<p then no anagrams
+        if( stringLen<window ){
+
+            return new ArrayList<>();
+        }
+
+        //
+        for( int i=0; i<window; i++){
+
+            pFreq[ p.charAt(i)-'a']++; //
+        }
+        for( int i=0; i<window; i++){
+
+            sFreq[ s.charAt(i)-'a']++;
+        }
+
+        List<Integer> result = new ArrayList<>();
+
+        //Slide window across string s
+        for( int i=window; i<stringLen ;i++){
+
+            if( Arrays.equals(pFreq, sFreq) ){
+
+                result.add( i-window ); //index of first occurence of anagram
+            }
+
+            sFreq[ s.charAt(i)-'a']++; //add 1 to the rightmost element
+            sFreq[ s.charAt(i-window)-'a']--; // remove 1 to the leftmost element 
+        }
+
+        //window outside for loop
+        if( Arrays.equals(pFreq, sFreq) ){
+
+            result.add( stringLen-window ) ;
+        }
+
+        return result;
+    }
+
+
     public static void main(String[] args){
 
         Scanner scan = new Scanner(System.in);
